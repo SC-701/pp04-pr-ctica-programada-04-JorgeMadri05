@@ -46,7 +46,10 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Restore dependencies
-        run: dotnet restore "Vehiculo.Web/Vehiculo.Web.sln"
+        run: |
+          dotnet restore "Vehiculo.Web/Vehiculo.Web.sln" \
+            --source "https://nuget.pkg.github.com/SC-701/index.json" \
+            --source "https://api.nuget.org/v3/index.json"
 
       - name: Build with dotnet
         run: |
