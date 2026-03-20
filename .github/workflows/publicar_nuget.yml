@@ -47,7 +47,7 @@ jobs:
         run: |
           find . -name "*.nupkg" | while read pkg; do
             dotnet nuget push "$pkg" \
-              --api-key ${{ secrets.GITHUB_TOKEN }} \
+              --api-key ${{ secrets.PAQUETESTOKEN }} \
               --source "https://nuget.pkg.github.com/SC-701/index.json" \
               --skip-duplicate
           done
