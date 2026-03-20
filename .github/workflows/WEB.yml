@@ -24,6 +24,7 @@ on:
 
 permissions:
   contents: read
+  packages: write
 
 jobs:
   build:
@@ -36,15 +37,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
-
-      - name: Configurar Nuget feed privado
-        run: |
-          dotnet nuget add source \
-            "https://nuget.pkg.github.com/SC-701/index.json" \
-            --name "Paquetes" \
-            --username "${{ github.actor }}" \
-            --password "${{ secrets.PAQUETESTOKEN }}" \
-            --store-password-in-clear-text
 
       - name: Set up dependency caching for faster builds
         uses: actions/cache@v3
