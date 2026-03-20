@@ -55,32 +55,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      - name: Configurar Nuget feed privado
+        run: |
+          dotnet nuget add source \
+            "https://nuget.pkg.github.com/SC-701/index.json" \
+            --name "Paquetes" \
+            --username "${{ github.actor }}" \
+            --password "${{ secrets.PAQUETESTOKEN }}" \
+            --store-password-in-clear-text
+
       - name: Restore dependencies
         run: |
           cd "Vehiculo.API"
-          dotnet restore "Abstracciones/Abstracciones.csproj" \
-            --source "https://api.nuget.org/v3/index.json" \
-            --source "https://nuget.pkg.github.com/SC-701/index.json"
-          
-          dotnet restore "DA/DA.csproj" \
-            --source "https://api.nuget.org/v3/index.json" \
-            --source "https://nuget.pkg.github.com/SC-701/index.json"
-          
-          dotnet restore "Flujo/Flujo.csproj" \
-            --source "https://api.nuget.org/v3/index.json" \
-            --source "https://nuget.pkg.github.com/SC-701/index.json"
-          
-          dotnet restore "Reglas/Reglas.csproj" \
-            --source "https://api.nuget.org/v3/index.json" \
-            --source "https://nuget.pkg.github.com/SC-701/index.json"
-          
-          dotnet restore "Servicios/Servicios.csproj" \
-            --source "https://api.nuget.org/v3/index.json" \
-            --source "https://nuget.pkg.github.com/SC-701/index.json"
-          
-          dotnet restore "API/API.csproj" \
-            --source "https://api.nuget.org/v3/index.json" \
-            --source "https://nuget.pkg.github.com/SC-701/index.json"
+          dotnet restore "Abstracciones/Abstracciones.csproj"
+          dotnet restore "DA/DA.csproj"
+          dotnet restore "Flujo/Flujo.csproj"
+          dotnet restore "Reglas/Reglas.csproj"
+          dotnet restore "Servicios/Servicios.csproj"
+          dotnet restore "API/API.csproj"
 
       - name: Build with dotnet (excluding BD project)
         run: |
