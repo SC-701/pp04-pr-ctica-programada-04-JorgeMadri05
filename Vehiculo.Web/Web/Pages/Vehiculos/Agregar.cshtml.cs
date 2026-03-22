@@ -39,6 +39,7 @@ namespace Web.Pages.Vehiculos
             return Page();
         }
 
+        [Authorize(Roles = "2")]
         public async Task<ActionResult> OnPost()
         {
             if (!ModelState.IsValid)
@@ -51,6 +52,7 @@ namespace Web.Pages.Vehiculos
             return RedirectToPage("./Index");
         }
 
+        [Authorize(Roles = "2")]
         private async Task ObtenerMarcas()
         {
             string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "ObtenerMarcas");
@@ -74,6 +76,7 @@ namespace Web.Pages.Vehiculos
         }
 
 
+        [Authorize(Roles = "2")]
         public async Task<List<Modelo>> ObtenerModelos(Guid marcaID)
         {
             string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "ObtenerModelos");

@@ -1,11 +1,14 @@
 using Abstracciones.Interfaces.Reglas;
 using Abstracciones.Modelos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
 
 namespace Web.Pages.Vehiculos
 {
+
+    [Authorize]
     public class DetalleModel : PageModel
     {
         private readonly IConfiguracion _configuracion;
@@ -18,6 +21,7 @@ namespace Web.Pages.Vehiculos
 
 
 
+        [Authorize(Roles = "1")]
         public async Task OnGet(Guid? id)
         {
             string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "ObtenerVehiculo");

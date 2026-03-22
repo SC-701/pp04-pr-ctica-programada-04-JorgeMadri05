@@ -1,5 +1,6 @@
 using Abstracciones.Interfaces.Reglas;
 using Abstracciones.Modelos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Cryptography.X509Certificates;
@@ -7,6 +8,8 @@ using System.Text.Json;
 
 namespace Web.Pages.Vehiculos
 {
+
+    [Authorize(Roles = "2")]
     public class EliminarModel : PageModel
     {
         private readonly IConfiguracion _configuracion;
@@ -17,6 +20,9 @@ namespace Web.Pages.Vehiculos
         }
 
         public VehiculoResponse vehiculo { get; set; } = default!;
+
+
+        [Authorize(Roles = "2")]
         public async Task<ActionResult> OnGet(Guid? id)
         {
             if (id == null)
@@ -32,6 +38,8 @@ namespace Web.Pages.Vehiculos
             return Page();
         }
 
+
+        [Authorize(Roles = "2")]
         public async Task<ActionResult> OnPost(Guid? id)
         {
             if (id == null)

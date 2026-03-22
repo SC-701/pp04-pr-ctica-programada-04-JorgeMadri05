@@ -1,5 +1,6 @@
 using Abstracciones.Interfaces.Reglas;
 using Abstracciones.Modelos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,8 @@ using System.Text.Json;
 
 namespace Web.Pages.Vehiculos
 {
+
+    [Authorize(Roles = "1")]
     public class EditarModel : PageModel
     {
         private readonly IConfiguracion _configuracion;
@@ -28,6 +31,8 @@ namespace Web.Pages.Vehiculos
         [BindProperty]
         public Guid modeloSeleccionado { get; set; }
 
+
+        [Authorize(Roles = "1")]
         public async Task<ActionResult> OnGet(Guid? id)
         {
             if (id==Guid.Empty)
@@ -63,6 +68,8 @@ namespace Web.Pages.Vehiculos
 
         }
 
+
+        [Authorize(Roles = "1")]
         public async Task<ActionResult> OnPost()
         {
             if (!ModelState.IsValid)
@@ -83,6 +90,8 @@ namespace Web.Pages.Vehiculos
             return RedirectToPage("./Index");
         }
 
+
+        [Authorize(Roles = "1")]
         private async Task ObtenerMarcas()
         {
             string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "ObtenerMarcas");
@@ -106,6 +115,7 @@ namespace Web.Pages.Vehiculos
         }
 
 
+        [Authorize(Roles = "1")]
         public async Task<List<Modelo>> ObtenerModelos(Guid marcaID)
         {
             string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "ObtenerModelos");

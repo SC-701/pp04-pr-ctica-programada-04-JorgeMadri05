@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Web.Pages.Vehiculos
 {
-    [Authorize]
+
+    [Authorize(Roles = "1")]
     public class IndexModel : PageModel
     {
         private readonly IConfiguracion _configuracion;
@@ -16,7 +17,9 @@ namespace Web.Pages.Vehiculos
         public IndexModel(IConfiguracion configuracion)
         {
             _configuracion = configuracion;
-        }   
+        }
+
+        [Authorize(Roles = "1")]
         public async Task OnGet()
         {
             string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "ObtenerVehiculos");
