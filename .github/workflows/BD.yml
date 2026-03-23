@@ -9,23 +9,22 @@
 # For more information on GitHub Actions for Azure: https://github.com/Azure/Actions
 # For more information on SQL Database deployment: https://docs.microsoft.com/en-us/azure/azure-sql/database/
 
-name: Deplay Seguridad Database to Azure SQL
+name: vehiculosc701
 
 env:
   AZURE_SQL_SERVER: sc7012026m.database.windows.net    # Tu servidor SQL de Azure (ejemplo: vehiculo-db-server.database.windows.net)
-  AZURE_SQL_DATABASE: Vehiculos    # Nombre de tu base de datos
-  DACPAC_PATH: 'Seguridad/Seguridad.API/BD/bin/Release/BD.dacpac'
+  AZURE_SQL_DATABASE: vehiculo    # Nombre de tu base de datos
+  DACPAC_PATH: 'Vehiculo.API/BD/bin/Release/BD.dacpac'
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - 'Seguridad/Seguridad.API/BD/**'
+      - 'Vehiculo.API/BD/**'
   workflow_dispatch:
 
 permissions:
   contents: read
-  packages: read
 
 jobs:
   build-and-deploy-database:
@@ -39,34 +38,25 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
+      - name: Configurar Nuget feed privado
+        run: |
+          dotnet nuget add source \
+            "https://nuget.pkg.github.com/SC-701/index.json" \
+            --name "Paquetes" \
+            --username "${{ github.actor }}" \
+            --password "${{ secrets.PAQUETESTOKEN }}" \
+            --store-password-in-clear-text
+
+            
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1
 
-      - name: Create NuGet.Config with Github Packages credentials
-        run: |
-          $content = @"
-          <?xml version="1.0" encoding="utf-8"?>
-          <configuration>
-            <packageSources>
-              <add key="github" value="https://nuget.pkg.github.com/SC-701/index.json" />
-            </packageSources>
-            <packageSourceCredentials>
-              <github>
-                <add key="Username" value="${{ github.actor }}" />
-                <add key="ClearTextPassword" value="${{ secrets.PAQUETESTOKEN }}" />
-              </github>
-            </packageSourceCredentials>
-          </configuration>
-          "@
-          $content | Out-File -FilePath "Seguridad/Seguridad.API/NuGet.Config" -Encoding utf8
-        shell: powershell
-
       - name: Restore NuGet packages
-        run: nuget restore "Seguridad/Seguridad.API/Seguridad.sln"
+        run: nuget restore "Vehiculo.API/Vehiculo.API.sln"
 
       - name: Build Database Project
         run: |
-          msbuild "Seguridad/Seguridad.API/BD/BD.sqlproj" /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath="./bin/Release/"
+          msbuild "Vehiculo.API/BD/BD.sqlproj" /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath="./bin/Release/"
         shell: cmd
 
       - name: Verify DACPAC file exists
