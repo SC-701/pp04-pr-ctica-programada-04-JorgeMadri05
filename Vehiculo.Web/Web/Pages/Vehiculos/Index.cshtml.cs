@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 
 namespace Web.Pages.Vehiculos
 {
-
-    [Authorize]
+    [Authorize(Roles = "1")]
     public class IndexModel : PageModel
     {
         private readonly IConfiguracion _configuracion;
@@ -20,13 +19,8 @@ namespace Web.Pages.Vehiculos
             _configuracion = configuracion;
         }
 
-        [Authorize (Roles = "1")]
         public async Task OnGet()
         {
-            // Ver rol
-            var rolesDelUsuario = User.Claims
-    .Where(c => c.Type == System.Security.Claims.ClaimTypes.Role)
-    .Select(c => c.Value).ToList();
             string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "ObtenerVehiculos");
             var cliente = ObtenerClienteConToken();
             var solicitud = new HttpRequestMessage(HttpMethod.Get, endpoint);

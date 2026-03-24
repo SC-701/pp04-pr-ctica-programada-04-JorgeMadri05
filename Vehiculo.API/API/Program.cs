@@ -67,8 +67,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 app.AutorizacionClaims();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

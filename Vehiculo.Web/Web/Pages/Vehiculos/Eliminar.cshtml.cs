@@ -21,8 +21,6 @@ namespace Web.Pages.Vehiculos
 
         public VehiculoResponse vehiculo { get; set; } = default!;
 
-
-        [Authorize(Roles = "2")]
         public async Task<ActionResult> OnGet(Guid? id)
         {
             if (id == null)
@@ -38,8 +36,6 @@ namespace Web.Pages.Vehiculos
             return Page();
         }
 
-
-        [Authorize(Roles = "2")]
         public async Task<ActionResult> OnPost(Guid? id)
         {
             if (id == null)
@@ -57,7 +53,7 @@ namespace Web.Pages.Vehiculos
         private HttpClient ObtenerClienteConToken()
         {
             var tokenClaim = HttpContext.User.Claims
-                .FirstOrDefault(c => c.Type == "AccessToken");
+                .FirstOrDefault(c => c.Type == "Token");
             var cliente = new HttpClient();
             if (tokenClaim != null)
                 cliente.DefaultRequestHeaders.Authorization =

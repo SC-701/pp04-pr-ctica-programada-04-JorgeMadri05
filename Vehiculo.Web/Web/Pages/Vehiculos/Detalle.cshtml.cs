@@ -8,7 +8,7 @@ using System.Text.Json;
 namespace Web.Pages.Vehiculos
 {
 
-    [Authorize]
+    [Authorize(Roles = "1")]
     public class DetalleModel : PageModel
     {
         private readonly IConfiguracion _configuracion;
@@ -19,9 +19,6 @@ namespace Web.Pages.Vehiculos
             _configuracion = configuracion;
         }
 
-
-
-        [Authorize(Roles = "1")]
         public async Task OnGet(Guid? id)
         {
             string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "ObtenerVehiculo");
@@ -39,7 +36,7 @@ namespace Web.Pages.Vehiculos
         private HttpClient ObtenerClienteConToken()
         {
             var tokenClaim = HttpContext.User.Claims
-                .FirstOrDefault(c => c.Type == "AccessToken");
+                .FirstOrDefault(c => c.Type == "Token");
             var cliente = new HttpClient();
             if (tokenClaim != null)
                 cliente.DefaultRequestHeaders.Authorization =
