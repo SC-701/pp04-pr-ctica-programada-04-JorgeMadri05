@@ -60,7 +60,7 @@ namespace Autorizacion.Middleware
             return await _autorizacionFlujo.ObtenerPerfilesxUsuario(new Abstracciones.Modelos.Usuario { NombreUsuario = httpContext.User.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value });
         }
 
-    }
+    } 
     public static class ClaimsUsuarioMiddlewareExtensions
     {
         public static IApplicationBuilder AutorizacionClaims(this IApplicationBuilder builder)

@@ -9,6 +9,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class VehiculoController : ControllerBase, IVehiculoController
     {
         private IVehiculoFlujo _vehiculoFlujo;

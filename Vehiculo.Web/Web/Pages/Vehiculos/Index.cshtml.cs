@@ -3,13 +3,14 @@ using Abstracciones.Modelos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Web.Pages.Vehiculos
 {
 
-    [Authorize(Roles = "1")]
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IConfiguracion _configuracion;
@@ -19,9 +20,13 @@ namespace Web.Pages.Vehiculos
             _configuracion = configuracion;
         }
 
-        [Authorize(Roles = "1")]
+        [Authorize (Roles = "1")]
         public async Task OnGet()
         {
+            // Ver rol
+            var rolesDelUsuario = User.Claims
+    .Where(c => c.Type == System.Security.Claims.ClaimTypes.Role)
+    .Select(c => c.Value).ToList();
             string endpoint = _configuracion.ObtenerMetodo("ApiEndPoints", "ObtenerVehiculos");
             var cliente = ObtenerClienteConToken();
             var solicitud = new HttpRequestMessage(HttpMethod.Get, endpoint);
@@ -37,7 +42,7 @@ namespace Web.Pages.Vehiculos
         private HttpClient ObtenerClienteConToken()
         {
             var tokenClaim = HttpContext.User.Claims
-                .FirstOrDefault(c => c.Type == "AccessToken");
+                .FirstOrDefault(c => c.Type == "Token");
             var cliente = new HttpClient();
             if (tokenClaim != null)
                 cliente.DefaultRequestHeaders.Authorization =
