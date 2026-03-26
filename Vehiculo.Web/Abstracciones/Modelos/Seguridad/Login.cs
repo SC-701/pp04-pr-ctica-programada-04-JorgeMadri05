@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Abstracciones.Modelos.Seguridad
 {
     public class LoginBase
-    {
+    { 
         public string? NombreUsuario { get; set; }
 
         public string? PasswordHash { get; set; }
