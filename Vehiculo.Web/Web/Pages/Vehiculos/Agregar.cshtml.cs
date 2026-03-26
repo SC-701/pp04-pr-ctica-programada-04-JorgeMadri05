@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Web.Pages.Vehiculos
-{
+{ 
     [Authorize(Roles ="2")]
     public class AgregarModel : PageModel
     {

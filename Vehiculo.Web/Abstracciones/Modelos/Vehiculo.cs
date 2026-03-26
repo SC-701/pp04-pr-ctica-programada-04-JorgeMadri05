@@ -22,7 +22,7 @@ namespace Abstracciones.Modelos
         [RegularExpression(@"(19|20)\d\d", ErrorMessage = "El formato de añono es valido")]
         public int Anio { get; set; }
 
-        [Required(ErrorMessage = "La propiedad precio es requerida")]
+        [Required(ErrorMessage = "La propiedad precio es requerida")] 
         public Decimal Precio { get; set; }
 
         [Required(ErrorMessage = "La propiedad correo es requerida")]

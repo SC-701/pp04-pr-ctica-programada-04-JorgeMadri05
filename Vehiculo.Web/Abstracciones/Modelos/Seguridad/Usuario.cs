@@ -14,7 +14,7 @@ namespace Abstracciones.Modelos.Seguridad
         public string? PasswordHash { get; set; }
         [Required]
         [EmailAddress]
-        public string CorreoElectronico { get; set; }
+        public string CorreoElectronico { get; set; } 
     }
 
     public class Usuario : UsuarioBase
