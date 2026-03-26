@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Web.Pages.Vehiculos
 {
-    [Authorize(Roles = "1")]
+    [Authorize(Roles = "1,2")]
     public class IndexModel : PageModel
     {
         private readonly IConfiguracion _configuracion;

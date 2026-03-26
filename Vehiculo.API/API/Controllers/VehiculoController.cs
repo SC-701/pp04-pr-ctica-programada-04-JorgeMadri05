@@ -48,7 +48,7 @@ namespace API.Controllers
             return NoContent();
         }
         [HttpGet]
-        [Authorize(Roles = "1")]
+        [Authorize(Roles = "1,2")]
         public async Task<IActionResult> Obtener()
         {
             var resultado = await _vehiculoFlujo.Obtener();
@@ -60,7 +60,7 @@ namespace API.Controllers
             return Ok(resultado);
         }
         [HttpGet("{Id}")]
-        [Authorize(Roles = "1")]
+        [Authorize(Roles = "1,2")]
         public async Task<IActionResult> Obtener([FromRoute]Guid Id)
         {
             var resultado = await _vehiculoFlujo.Obtener(Id);
